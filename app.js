@@ -8,7 +8,6 @@ var redis = require('redis');
 var redisClient = redis.createClient();
 
 
-
 var saveMessage = function(name, data) {
   //need to turn obj into string to store in redis
   var message = JSON.stringify({
@@ -55,27 +54,17 @@ io.on('connection', function(client) {
     console.log(`${name} connected...`);
   });
 
-
   client.on('messages', function(data) { //listen for message events\
     var nickname = client.nickname;
     client.broadcast.emit('messages', nickname + ": " + data);
-
     client.emit('messages', nickname + ": " + data);
-    // console.log('data: ', data);
     saveMessage(nickname, data);
   });
 
-
   client.on('disconnect', function() {
-    // console.log('name on disconnect', name);
-    // console.log('type on disconnect', typeof name);
-    console.log('existing nickname', client.nickname);
-    // client.get('nickname', function(err, name){
     var name = client.nickname;
     client.broadcast.emit('remove chatter', name);
-
     redisClient.srem("chatterList", name);
-    // });
   });
 });
 

@@ -55,7 +55,7 @@
   socket.on('connect', function(data) {
 
     nickname = prompt("what is your nickname?");
-    $('#status').html('Hi, ' + nickname + '! You\'re connected to chattr.');
+    $('#status').html('<h2>Hi, <b>'+ nickname + '</b>! You\'re connected to chattr.</h2>');
 
     socket.emit('join', nickname);
   });
