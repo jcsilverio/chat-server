@@ -24,7 +24,7 @@
         </div>
       </form>
       <div class="row" id="status"></div>
-      <div class="row"><ul id="textMessages"></ul></div>
+      <div class="row"><div id="textMessages"></div></div>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -35,7 +35,7 @@
   function insertMessage(data) {
    console.log('insertMessage FIres: ', data);
    console.log(typeof data);
-   var newMessage = '<li>' + data + '</li>';
+   var newMessage = '<span>' + data + '<span><br />';
    $('#textMessages').append(newMessage);
 
   }
