@@ -4,8 +4,17 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 io.on('connection', function (client) {
-  console.log('Client connected...');
-  client.on('messages', function (data){ //listen for message events
+  client.on('join', function(name){
+    client.nickname = name;
+    console.log(`${name} + ' connected...'`);
+  });
+
+
+  client.on('messages', function (data){ //listen for message events\
+    var nickname =  client.nickname;
+    client.broadcast.emit('messages', nickname + ": " + data);
+
+    client.emit('messages', nickname + ": " + data);
     console.log('data: ', data);
   });
 });

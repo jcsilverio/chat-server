@@ -7,12 +7,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <!--   <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
   <title>Chat Server</title>
 </head>
 
 <body>
   <div class="container-fluid">
+    <div id="chatBox" class="row text-center">
       <form id="chat_form">
         <div>
           <label for="example">Let's submit some text</label>
@@ -22,20 +23,46 @@
           <input type="submit" value="Send">
         </div>
       </form>
+      <div class="row" id="status"></div>
+      <div class="row" id="textMessages"></div>
+    </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <!-- include socket.io library -->
+  <!-- include socket.io library -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
-      var socket = io.connect('http://localhost:8080');
+  function insertMessage(data) {
+   console.log('insertMessage FIres: ', data);
+   console.log(typeof data);
+   $('#textMessages').append(data);
 
-      $('#chat_form').submit(function(e){
-        var message = $('#chat_input').val();
-        //emit the messages event on the server
-        socket.emit('messages', message);
+  }
+  </script>
+  <script>
+  var socket = io.connect('http://localhost:8080');
+  socket.on('connect', function(data){
+    $('#status').html('Connected to chattr');
+    nickname = prompt("what is your nickname?");
+
+    socket.emit('join', nickname);
+  })
+
+  $('#chat_form').submit(function(e) {
+    var message = $('#chat_input').val();
+    //emit the messages event on the server
+    socket.emit('messages', message);
+    e.preventDefault();
+
   });
- </script>
+
+  socket.on('messages', function(data) {
+
+    insertMessage(data);
+
+  });
+  </script>
+
 </body>
 
 </html>
