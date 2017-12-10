@@ -5,9 +5,24 @@ body { /*Full Page Background Image*/
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  color:white;
+
 }
 
+#app {
+margin-left: 200px;
+margin-right: 200px;
+margin-top: 50px;
+
+}
+
+.brightText {
+  color: white;
+}
+
+#chat_input {
+
+  margin: 10px
+}
 
 /* Chat rowChats */
 .rowChat {
