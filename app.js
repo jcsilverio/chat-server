@@ -27,20 +27,20 @@ var saveMessage = function(name, data) {
 
 io.on('connection', function(client) {
   client.on('join', function(name) {
-    // //notify other clients that a participant has joined
-    // client.broadcast.emit("add chatter", name);
-    // //add name to redis set
+    //notify other clients that a participant has joined
+    client.broadcast.emit("add chatter", name);
+    //add name to redis set
 
-    // redisClient.smembers('names', function(err, names) {
-    //   names.forEach(function(name) {
-    //     client.emit('add chatter', name);
-    //   });
-    // });
-    // redisClient.sadd("chatters", name);
+    redisClient.smembers('chatterList', function(err, names) {
+      names.forEach(function(name) {
+        client.emit('add chatter', name);
+      });
+    });
+    redisClient.sadd("chatterList", name);
 
     // emit a message on the connecting client for each existing message
     redisClient.lrange("messageList", 0, -1, function(err, messages) {
-      console.log('lrange err:', err);
+
       //reverse messages to be read in correct order
       messages = messages.reverse();
 
