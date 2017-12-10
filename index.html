@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!--   <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <title>Chat Server</title>
+</head>
+
+<body>
+  <div class="container-fluid">
+      <form id="chat_form">
+        <div>
+          <label for="example">Let's submit some text</label>
+          <input id="chat_input" type="text" name="text">
+        </div>
+        <div>
+          <input type="submit" value="Send">
+        </div>
+      </form>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <!-- include socket.io library -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+      var socket = io.connect('http://localhost:8080');
+
+      $('#chat_form').submit(function(e){
+        var message = $('#chat_input').val();
+        //emit the messages event on the server
+        socket.emit('messages', message);
+  });
+ </script>
+</body>
+
+</html>
