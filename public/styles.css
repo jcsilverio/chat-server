@@ -1,8 +1,21 @@
+
+body { /*Full Page Background Image*/
+  background: url(/pexels-talk.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color:white;
+}
+
+
 /* Chat rowChats */
 .rowChat {
     border: 2px solid #dedede;
-    background-color: #f1f1f1;
+    background-color: rgba(241, 241, 241, 0.2);
     border-radius: 5px;
+    color: black;
+
     padding: 10px;
     margin: 10px 0;
 }
@@ -10,7 +23,7 @@
 /* Darker chat rowChat */
 .darker {
     border-color: #ccc;
-    background-color: #ddd;
+    background-color: rgba(241, 241, 241, 0.6);
 }
 
 /* Clear floats */
@@ -47,3 +60,4 @@
     float: left;
     color: #999;
 }
+

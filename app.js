@@ -27,12 +27,22 @@ var saveMessage = function(name, data) {
 
 io.on('connection', function(client) {
   client.on('join', function(name) {
+    // //notify other clients that a participant has joined
+    // client.broadcast.emit("add chatter", name);
+    // //add name to redis set
+
+    // redisClient.smembers('names', function(err, names) {
+    //   names.forEach(function(name) {
+    //     client.emit('add chatter', name);
+    //   });
+    // });
+    // redisClient.sadd("chatters", name);
 
     // emit a message on the connecting client for each existing message
     redisClient.lrange("messageList", 0, -1, function(err, messages) {
-    console.log('lrange err:', err);
+      console.log('lrange err:', err);
       //reverse messages to be read in correct order
-      messages = messages.reverse();
+      // messages = messages.reverse();
 
       messages.forEach(function(message) {
         //parse into JSON object
@@ -54,6 +64,18 @@ io.on('connection', function(client) {
     // console.log('data: ', data);
     saveMessage(nickname, data);
   });
+
+
+  // client.on('disconnect', function(){
+  //   // console.log('name on disconnect', name);
+  //   // console.log('type on disconnect', typeof name);
+  //   console.log('existing nickname', client.nickname);
+  //   // client.get('nickname', function(err, name){
+  //   //   client.broadcast.emit('remove chatter', name);
+
+  //   //   redisClient.srem("chatters", name);
+  //   // });
+  // });
 });
 
 app.get('/', function(req, res) {

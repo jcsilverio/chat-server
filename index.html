@@ -15,7 +15,7 @@
   <div class="container-fluid">
     <div id="chatBox" class="row text-center">
       <div class="col-md-2">
-         <div id="onlineUsers"></div>
+         <div id="onlineUsers">Online Users</div>
       </div>
       <div class="col-md-10">
         <form id="chat_form">
@@ -29,7 +29,9 @@
         </form>
         <div class="row" id="status"></div>
         <div class="row">
-          <div id="textMessages"></div>
+          <div class="col-md-5"></div>
+          <div class="col-md-7"><div id="textMessages" class="center-block"></div>
+        </div>
         </div>
       </div>
     </div>
@@ -39,20 +41,29 @@
   <!-- include socket.io library -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
+  var socket = io.connect('http://localhost:8080');
+
   function insertMessage(data) {
+    console.log('data', data);
 
     var newMessage = '<div class="rowChat darker"><i class="fa fa arrows"></i><p>' + data + '</p><span class="time-right">11:00</span></div>';
     $('#textMessages').append(newMessage);
 
   }
 
-  var socket = io.connect('http://localhost:8080');
   socket.on('connect', function(data) {
     $('#status').html('Connected to chattr');
     nickname = prompt("what is your nickname?");
 
     socket.emit('join', nickname);
-  })
+  });
+
+  socket.on('add chatter', function(name){
+    var chatter = $('<span>' + name + '</span>').data('name', name);
+    $('#onlineUsers').append(chatter);
+
+  });
+
 
   $('#chat_form').submit(function(e) {
     var message = $('#chat_input').val();
