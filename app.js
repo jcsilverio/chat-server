@@ -42,7 +42,7 @@ io.on('connection', function(client) {
     redisClient.lrange("messageList", 0, -1, function(err, messages) {
       console.log('lrange err:', err);
       //reverse messages to be read in correct order
-      // messages = messages.reverse();
+      messages = messages.reverse();
 
       messages.forEach(function(message) {
         //parse into JSON object
