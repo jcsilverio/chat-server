@@ -66,16 +66,17 @@ io.on('connection', function(client) {
   });
 
 
-  // client.on('disconnect', function(){
-  //   // console.log('name on disconnect', name);
-  //   // console.log('type on disconnect', typeof name);
-  //   console.log('existing nickname', client.nickname);
-  //   // client.get('nickname', function(err, name){
-  //   //   client.broadcast.emit('remove chatter', name);
+  client.on('disconnect', function() {
+    // console.log('name on disconnect', name);
+    // console.log('type on disconnect', typeof name);
+    console.log('existing nickname', client.nickname);
+    // client.get('nickname', function(err, name){
+    var name = client.nickname;
+    client.broadcast.emit('remove chatter', name);
 
-  //   //   redisClient.srem("chatters", name);
-  //   // });
-  // });
+    redisClient.srem("chatterList", name);
+    // });
+  });
 });
 
 app.get('/', function(req, res) {
