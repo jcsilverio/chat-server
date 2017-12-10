@@ -19,7 +19,7 @@
       <div class="col-md-2">
         <div class="rowChat darker" id="onlineUsers">Online Users</div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="brightText" id="status"></div>
         <form id="chat_form">
           <div>
@@ -29,7 +29,7 @@
 
         </form>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-5">
         <div id="textMessages" class="center-block"></div>
       </div>
       <!--  end row -->
@@ -41,13 +41,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- include socket.io library -->
   <script src="/socket.io/socket.io.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
   <script>
-  var socket = io.connect('http://localhost:8080');
+  var socket = io.connect('http://joelles-macbook-pro.local:8080');
 
   function insertMessage(data) {
-    console.log('data', data);
 
-    var newMessage = '<div class="rowChat darker"><i class="fa fa arrows"></i><p>' + data + '</p><span class="time-right">11:00</span></div>';
+    var newMessage = '<div class="rowChat darker"><p>' + data + '</p><span class="time-right">'+ moment().calendar();+'</span></div>';
     $('#textMessages').prepend(newMessage);
 
   }
@@ -55,12 +55,13 @@
   socket.on('connect', function(data) {
 
     nickname = prompt("what is your nickname?");
-    $('#status').html('<h2>Hi, <b>'+ nickname + '</b>! You\'re connected to chattr.</h2>');
+    $('#status').html('<h3>Hi, <b>'+ nickname + '</b>! You\'re connected to ChattrBx.</h3>');
 
     socket.emit('join', nickname);
   });
 
   socket.on('add chatter', function(name) {
+    console.log('add chatter name', name);
     var chatter = $('<p>' + name + '</p>').data('name', name);
     $('#onlineUsers').append(chatter);
 

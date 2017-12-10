@@ -16,9 +16,7 @@ var saveMessage = function(name, data) {
   });
 
   redisClient.lpush("messageList", message, function(err, response) {
-    console.log('lpush err:', err);
     //keep newest 10 messages in the array
-
     redisClient.ltrim("messageList", 0, 9);
   });
 }

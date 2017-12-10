@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2",
+    "moment": "^2.19.3",
     "node": "^9.2.0",
     "redis": "2.8.0",
     "redis-server": "1.1.0",
