@@ -7,24 +7,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
   <title>Chat Server</title>
 </head>
 
 <body>
   <div class="container-fluid">
     <div id="chatBox" class="row text-center">
-      <form id="chat_form">
-        <div>
-          <label for="example">Let's submit some text</label>
-          <input id="chat_input" type="text" name="text">
+      <div class="col-md-2">
+         <div id="onlineUsers"></div>
+      </div>
+      <div class="col-md-10">
+        <form id="chat_form">
+          <div>
+            <label for="example">Let's submit some text</label>
+            <input id="chat_input" type="text" name="text">
+          </div>
+          <div>
+            <input type="submit" value="Send">
+          </div>
+        </form>
+        <div class="row" id="status"></div>
+        <div class="row">
+          <div id="textMessages"></div>
         </div>
-        <div>
-          <input type="submit" value="Send">
-        </div>
-      </form>
-      <div class="row" id="status"></div>
-      <div class="row"><div id="textMessages"></div></div>
+      </div>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -33,16 +40,14 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
   function insertMessage(data) {
-   console.log('insertMessage FIres: ', data);
-   console.log(typeof data);
-   var newMessage = '<span>' + data + '<span><br />';
-   $('#textMessages').append(newMessage);
+
+    var newMessage = '<div class="rowChat darker"><i class="fa fa arrows"></i><p>' + data + '</p><span class="time-right">11:00</span></div>';
+    $('#textMessages').append(newMessage);
 
   }
-  </script>
-  <script>
+
   var socket = io.connect('http://localhost:8080');
-  socket.on('connect', function(data){
+  socket.on('connect', function(data) {
     $('#status').html('Connected to chattr');
     nickname = prompt("what is your nickname?");
 
@@ -63,7 +68,6 @@
 
   });
   </script>
-
 </body>
 
 </html>

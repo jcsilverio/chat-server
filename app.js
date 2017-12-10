@@ -1,9 +1,12 @@
 var express = require('express');
 var app = express();
+var path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var redis = require('redis');
 var redisClient = redis.createClient();
+
 
 
 var saveMessage = function(name, data) {
