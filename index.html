@@ -17,7 +17,7 @@
     <!-- row -->
     <div class="row">
       <div class="col-md-2">
-        <div class="rowChat darker" id="onlineUsers">Online Users</div>
+        <div class="rowChat darker" id="onlineUsers"><h4>Online Users</h4></div>
       </div>
       <div class="col-md-5">
         <div class="brightText" id="status"></div>
@@ -52,9 +52,19 @@
 
   }
 
+function getNickname () {
+  var askNickname = prompt("what is your nickname?");
+   if(askNickname === null){
+      askNickname = prompt("what is your nickname?");
+    } else {
+      nickname = askNickname;
+    }
+    return nickname;
+}
   socket.on('connect', function(data) {
 
-    nickname = prompt("what is your nickname?");
+    var nickname = getNickname();
+
     $('#status').html('<h3>Hi, <b>'+ nickname + '</b>! You\'re connected to ChattrBx.</h3>');
 
     socket.emit('join', nickname);
@@ -62,8 +72,15 @@
 
   socket.on('add chatter', function(name) {
     console.log('add chatter name', name);
-    var chatter = $('<p>' + name + '</p>').data('name', name);
+    var chatter = $('<p id="' + encodeURI(name) + '">' + name + '</p>').data('name', name);
     $('#onlineUsers').append(chatter);
+
+  });
+
+
+  socket.on('remove chatter', function(name) {
+     $('"#' +name+'"').remove();
+     console.log('remove chatter name', name);
 
   });
 

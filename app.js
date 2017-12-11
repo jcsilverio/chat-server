@@ -61,8 +61,11 @@ io.on('connection', function(client) {
 
   client.on('disconnect', function() {
     var name = client.nickname;
-    client.broadcast.emit('remove chatter', name);
-    redisClient.srem("chatterList", name);
+    redisClient.srem("chatterList", name, function (name){
+       console.log(`${name} DISconnected...`);
+     client.broadcast.emit('remove chatter', name);
+    });
+
   });
 });
 
